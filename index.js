@@ -2,23 +2,26 @@ import { getUsername, goodbyeUser, welcomeUser } from './src/utils.js';
 import { setPrompt } from './src/promt.js';
 import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
-import os from 'os';
+import { operation } from './src/operation.js';
+import { COMMAND_ARGUMENTS_REGEX, HOME } from './src/constants.js';
 const rl = readline.createInterface({ input, output });
 
 const main = async () => {
+  let currentDir = HOME;
   const currentUser = getUsername();
-  const directories = [os.homedir()];
-  welcomeUser(currentUser);
-  setPrompt(rl, directories[0]);
 
-  rl.on('line', (answer) => {
-    const command = answer.trim().toLowerCase();
-    if (command === '.exit') {
-      rl.close();
-    } else {
-      console.log(`echo: ${command}`);
+  welcomeUser(currentUser);
+  setPrompt(rl, currentDir);
+
+  rl.on('line', async (answer) => {
+    const args = [];
+    let match;
+    while ((match = COMMAND_ARGUMENTS_REGEX.exec(answer)) !== null) {
+      args.push(match[1] ? match[1] : match[0]);
     }
-    setPrompt(rl, directories[0]);
+    const [command, ...rest] = args;
+    currentDir = await operation(rl, currentDir, command, rest);
+    setPrompt(rl, currentDir);
   });
 
   process.on('SIGINT', () => {

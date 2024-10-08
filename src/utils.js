@@ -1,6 +1,9 @@
 import { EOL } from 'os';
-import { colors } from './promt.js';
+import { colors } from './constants.js';
 
+/**
+ * @return {String}
+ */
 export const getUsername = () => {
   const defaultName = 'Anonymous';
   const args = process.argv.slice(2);
@@ -12,13 +15,26 @@ export const getUsername = () => {
   return defaultName;
 };
 
+/**
+ * @param {String} username
+ */
 export const welcomeUser = (username) => {
-  console.log(`${colors.red}Welcome to the File Manager, ${username}!`, colors.reset);
+  console.log(`${colors.cyan}Welcome to the File Manager, ${username}!`, colors.reset);
 };
 
+/**
+ * @param {String} username
+ */
 export const goodbyeUser = (username) => {
   console.log(
-    `${EOL}${colors.red}Thank you for using File Manager, ${username}, goodbye!`,
+    `${EOL}${colors.cyan}Thank you for using File Manager, ${username}, goodbye!`,
     colors.reset,
   );
+};
+
+/**
+ * @param {String} text
+ */
+export const showError = (text) => {
+  console.error(text);
 };

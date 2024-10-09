@@ -1,5 +1,6 @@
 import { readdir } from 'node:fs/promises';
 import { ERRORS } from '../constants.js';
+import { EOL } from 'node:os';
 
 const fileType = 'file';
 const dirType = 'directory';
@@ -18,7 +19,10 @@ export const ls = async (currentDir) => {
       }
       return 1;
     });
-    console.table(result);
+    if (result.length !== 0) {
+      console.table(result);
+    }
+    process.stdout.write(EOL);
   } catch {
     console.error(ERRORS.failed);
   }

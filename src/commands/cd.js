@@ -27,7 +27,9 @@ export const cd = async (currentDir, options) => {
   const [pathToDirectory] = options;
 
   const cleanPath = path.isAbsolute(pathToDirectory)
-    ? pathToDirectory.replace(/[\/\\]$/, '')
+    ? pathToDirectory === '/'
+      ? pathToDirectory
+      : pathToDirectory.replace(/[\/\\]$/, '')
     : path.resolve(currentDir, pathToDirectory);
 
   try {

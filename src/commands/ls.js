@@ -5,13 +5,26 @@ import { EOL } from 'node:os';
 const fileType = 'file';
 const dirType = 'directory';
 
+const truncateText = (text, maxLength) => {
+  if (text.length <= maxLength) {
+    return text;
+  }
+  const halfLength = Math.floor((maxLength - 3) / 2);
+  return text.slice(0, halfLength) + '...' + text.slice(-halfLength);
+};
+
+const terminalWidth = process.stdout.columns || 80;
+const maxFileNameLength = Math.min(terminalWidth - 40, 200);
+
 export const ls = async (currentDir) => {
   const result = [];
 
   try {
     const files = await readdir(currentDir, { withFileTypes: true });
     for (const file of files) {
-      result.push({ Name: file.name, Type: file.isDirectory() ? dirType : fileType });
+      const fileName = truncateText(file.name, maxFileNameLength);
+      const type = file.isDirectory() ? dirType : fileType;
+      result.push({ Name: fileName, Type: type });
     }
     result.sort((a, b) => {
       if (a.Type === dirType && b.Type !== dirType) {

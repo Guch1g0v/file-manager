@@ -4,15 +4,13 @@ import { cd } from './cd.js';
 import { echo } from './echo.js';
 import { ls } from './ls.js';
 import { rm } from './rm.js';
+import { rn } from './rn.js';
 import { up } from './up.js';
 
 const clear = (currentDir) => {
   return currentDir;
 };
 
-const rn = (currentDir) => {
-  return currentDir;
-};
 const cp = (currentDir) => {
   return currentDir;
 };

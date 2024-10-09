@@ -6,6 +6,9 @@ import { colors } from './constants.js';
  */
 export const getUsername = () => {
   const defaultName = 'Anonymous';
+  if (process.env?.npm_config_username) {
+    return process.env.npm_config_username;
+  }
   const args = process.argv.slice(2);
   const usernameArg = args.find((arg) => arg.startsWith('--username='));
   if (usernameArg) {

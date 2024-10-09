@@ -16,6 +16,12 @@ const truncateText = (text, maxLength) => {
 const terminalWidth = process.stdout.columns || 80;
 const maxFileNameLength = Math.min(terminalWidth - 40, 200);
 
+/**
+ * Lists the contents of the specified directory and prints a formatted table.
+ *
+ * @param {string} currentDir - The path of the directory to list the contents of.
+ * @returns {Promise<string>} - Returns the current directory path after listing contents.
+ */
 export const ls = async (currentDir) => {
   const result = [];
 

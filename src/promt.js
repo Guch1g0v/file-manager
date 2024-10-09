@@ -16,7 +16,7 @@ export const setPrompt = (rl, currentDir) => {
   if (currentDir !== '/' || PLATFORM === 'win32') {
     currentDir = currentDir.replace(/[\/\\]$/, '');
   }
-  console.log(`You are currently in [${currentDir}]`);
+  console.log(`${colors.blue}You are currently in [${currentDir}]${colors.reset}`);
   currentDir = currentDir.replace(HOME, '~');
   const promptText = `${new Date().toLocaleTimeString()} [${currentDir}]`;
   rl.setPrompt(`${colors.green}${promptText}${EOL}${promptSymbol} ${colors.reset}`);

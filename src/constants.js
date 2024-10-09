@@ -19,6 +19,10 @@ export const ERRORS = {
 
 export const HOME = homedir();
 export const PLATFORM = platform();
+export const DirState = {
+  PWD: '',
+  OLDPWD: '',
+};
 
 /**
  * Regular expression to split the input into commands and arguments.
@@ -33,4 +37,3 @@ export const PLATFORM = platform();
  * @type {RegExp}
  */
 export const COMMAND_ARGUMENTS_REGEX = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
-

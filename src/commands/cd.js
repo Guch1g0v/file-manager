@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import { ERRORS, HOME, PLATFORM } from '../constants.js';
+import { DirState, ERRORS, HOME, PLATFORM } from '../constants.js';
 import { showError } from '../utils.js';
 
 /**
@@ -22,9 +22,25 @@ export const cd = async (currentDir, options) => {
     return currentDir;
   }
   if (options.length === 0) {
+    DirState.OLDPWD = DirState.PWD;
+    DirState.PWD = HOME;
     return HOME;
   }
   let [pathToDirectory] = options;
+
+  if (pathToDirectory === '~') {
+    DirState.OLDPWD = DirState.PWD;
+    DirState.PWD = HOME;
+    return HOME;
+  }
+
+  if (pathToDirectory === '-') {
+    if (!DirState.OLDPWD) return HOME;
+    const t = DirState.OLDPWD;
+    DirState.OLDPWD = DirState.PWD;
+    DirState.PWD = t;
+    return t;
+  }
 
   if (PLATFORM === 'win32' && /^[a-zA-Z]:$/.test(pathToDirectory)) {
     pathToDirectory += '\\';
@@ -43,6 +59,8 @@ export const cd = async (currentDir, options) => {
   try {
     const stats = await fs.stat(cleanPath);
     if (stats.isDirectory()) {
+      DirState.OLDPWD = DirState.PWD;
+      DirState.PWD = cleanPath;
       return cleanPath;
     }
     showError(ERRORS.failed);

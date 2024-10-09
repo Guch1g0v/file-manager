@@ -3,13 +3,13 @@ import { setPrompt } from './src/promt.js';
 import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import { operation } from './src/operation.js';
-import { COMMAND_ARGUMENTS_REGEX, HOME } from './src/constants.js';
+import { COMMAND_ARGUMENTS_REGEX, DirState, HOME } from './src/constants.js';
 const rl = readline.createInterface({ input, output });
 
 const main = async () => {
   let currentDir = HOME;
+  DirState.PWD = HOME;
   const currentUser = getUsername();
-
   welcomeUser(currentUser);
   setPrompt(rl, currentDir);
 

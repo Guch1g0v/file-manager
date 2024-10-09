@@ -4,10 +4,12 @@ import path from 'node:path';
 import { ERRORS } from '../constants.js';
 
 /**
+ * Creates a new file with the specified name in the current directory.
+ * If the file already exists, it will be overwritten.
  *
- * @param {String} currentDir
- * @param {String[]} options
- * @returns {Promise<String>}
+ * @param {string} currentDir - The current directory where the file will be created.
+ * @param {string[]} options - An array of options, expected to contain only the file name.
+ * @returns {Promise<string>} Returns the current directory after the operation is completed.
  */
 export const add = async (currentDir, options) => {
   if (options.length !== 1) {

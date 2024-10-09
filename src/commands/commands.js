@@ -6,15 +6,10 @@ import { ls } from './ls.js';
 import { rm } from './rm.js';
 import { rn } from './rn.js';
 import { up } from './up.js';
+import { cp } from './cp.js';
+import { mv } from './mv.js';
 
 const clear = (currentDir) => {
-  return currentDir;
-};
-
-const cp = (currentDir) => {
-  return currentDir;
-};
-const mv = (currentDir) => {
   return currentDir;
 };
 

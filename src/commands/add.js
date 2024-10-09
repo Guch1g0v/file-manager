@@ -3,6 +3,12 @@ import { showError } from '../utils.js';
 import path from 'node:path';
 import { ERRORS } from '../constants.js';
 
+/**
+ *
+ * @param {String} currentDir
+ * @param {String[]} options
+ * @returns {Promise<String>}
+ */
 export const add = async (currentDir, options) => {
   if (options.length !== 1) {
     showError(ERRORS.invalidInput);

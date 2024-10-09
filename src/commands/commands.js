@@ -1,3 +1,4 @@
+import { cat } from './cat.js';
 import { cd } from './cd.js';
 import { echo } from './echo.js';
 import { ls } from './ls.js';
@@ -7,9 +8,6 @@ const clear = (currentDir) => {
   return currentDir;
 };
 
-const cat = (currentDir) => {
-  return currentDir;
-};
 const add = (currentDir) => {
   return currentDir;
 };

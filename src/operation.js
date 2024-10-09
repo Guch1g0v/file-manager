@@ -13,10 +13,10 @@ import { showError } from './utils.js';
  * @param {import('readline').Interface} rl
  * @param {String} currentDir
  * @param {String} command
- * @param {String[]} rest
+ * @param {String[]} options
  * @returns {String}
  */
-export const operation = async (rl, currentDir, command, rest) => {
+export const operation = async (rl, currentDir, command, options) => {
   const isCommandExists = command in COMMANDS || command === COMMANDS.exit.cmd;
   if (!isCommandExists) {
     showError(ERRORS.invalidInput);
@@ -26,5 +26,5 @@ export const operation = async (rl, currentDir, command, rest) => {
     rl.close();
     return currentDir;
   }
-  return await COMMANDS[command].do(currentDir, rest);
+  return await COMMANDS[command].do(currentDir, options);
 };

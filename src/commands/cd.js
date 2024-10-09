@@ -24,7 +24,11 @@ export const cd = async (currentDir, options) => {
   if (options.length === 0) {
     return HOME;
   }
-  const [pathToDirectory] = options;
+  let [pathToDirectory] = options;
+
+  if (PLATFORM === 'win32' && /^[a-zA-Z]:$/.test(pathToDirectory)) {
+    pathToDirectory += '\\';
+  }
 
   let cleanPath = path.isAbsolute(pathToDirectory)
     ? pathToDirectory

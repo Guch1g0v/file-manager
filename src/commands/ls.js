@@ -1,49 +1,37 @@
-import { readdir } from 'node:fs/promises';
-import { ERRORS } from '../constants.js';
-import { EOL } from 'node:os';
-
-const fileType = 'file';
-const dirType = 'directory';
-
-const truncateText = (text, maxLength) => {
-  if (text.length <= maxLength) {
-    return text;
-  }
-  const halfLength = Math.floor((maxLength - 3) / 2);
-  return text.slice(0, halfLength) + '...' + text.slice(-halfLength);
-};
-
-const terminalWidth = process.stdout.columns || 80;
-const maxFileNameLength = Math.min(terminalWidth - 40, 200);
+import { ERRORS, FILE_TYPE } from '../constants.js';
+import { getStats, printFilesTable } from '../utils.js';
+import path from 'node:path';
 
 /**
  * Lists the contents of the specified directory and prints a formatted table.
  *
- * @param {string} currentDir - The path of the directory to list the contents of.
+ * @param {String} currentDir - The path of the directory to list the contents of.
+ * @param {String[]} options
  * @returns {Promise<string>} - Returns the current directory path after listing contents.
  */
-export const ls = async (currentDir) => {
-  const result = [];
-
-  try {
-    const files = await readdir(currentDir, { withFileTypes: true });
-    for (const file of files) {
-      const fileName = truncateText(file.name, maxFileNameLength);
-      const type = file.isDirectory() ? dirType : fileType;
-      result.push({ Name: fileName, Type: type });
+export const ls = async (currentDir, options) => {
+  if (options.length === 0) {
+    try {
+      await printFilesTable(currentDir);
+    } catch {
+      console.error(ERRORS.failed);
     }
-    result.sort((a, b) => {
-      if (a.Type === dirType && b.Type !== dirType) {
-        return -1;
+    return currentDir;
+  }
+  for (const option of options) {
+    let dirPath = currentDir;
+    try {
+      dirPath = path.resolve(currentDir, option);
+      const fileStats = await getStats(dirPath);
+      if (fileStats.isFile()) {
+        const fileName = path.basename(dirPath);
+        console.table([{ Name: fileName, Type: FILE_TYPE }]);
+        continue;
       }
-      return 1;
-    });
-    if (result.length !== 0) {
-      console.table(result);
+      await printFilesTable(dirPath);
+    } catch {
+      console.error(ERRORS.failed);
     }
-    process.stdout.write(EOL);
-  } catch {
-    console.error(ERRORS.failed);
   }
   return currentDir;
 };

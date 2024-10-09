@@ -1,5 +1,8 @@
 import { homedir, platform } from 'node:os';
 
+export const FILE_TYPE = 'file';
+export const DIR_TYPE = 'directory';
+
 export const colors = {
   reset: '\x1b[0m',
   black: '\x1b[30m',

@@ -3,6 +3,7 @@ import { cat } from './cat.js';
 import { cd } from './cd.js';
 import { echo } from './echo.js';
 import { ls } from './ls.js';
+import { rm } from './rm.js';
 import { up } from './up.js';
 
 const clear = (currentDir) => {
@@ -18,9 +19,7 @@ const cp = (currentDir) => {
 const mv = (currentDir) => {
   return currentDir;
 };
-const rm = (currentDir) => {
-  return currentDir;
-};
+
 const os = (currentDir) => {
   return currentDir;
 };

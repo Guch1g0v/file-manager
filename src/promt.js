@@ -1,7 +1,7 @@
-import { platform, EOL } from 'node:os';
-import { colors } from './constants.js';
+import { EOL } from 'node:os';
+import { colors, HOME, PLATFORM } from './constants.js';
 
-const promptSymbol = platform() === 'win32' ? '>' : '$';
+const promptSymbol = PLATFORM === 'win32' ? '>' : '$';
 
 /**
  * Sets and displays a prompt with the current time and directory.
@@ -13,7 +13,9 @@ const promptSymbol = platform() === 'win32' ? '>' : '$';
  * @param {String} currentDir
  */
 export const setPrompt = (rl, currentDir) => {
+  currentDir = currentDir.replace(/(?<!^)\/+|(?<!^)\\+$/, '');
   console.log(`You are currently in [${currentDir}]`);
+  currentDir = currentDir.replace(HOME, '~');
   const promptText = `${new Date().toLocaleTimeString()} [${currentDir}]`;
   rl.setPrompt(`${colors.green}${promptText}${EOL}${promptSymbol} ${colors.reset}`);
   rl.prompt();

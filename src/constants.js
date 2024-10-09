@@ -1,4 +1,4 @@
-import { homedir } from 'node:os';
+import { homedir, platform } from 'node:os';
 
 export const colors = {
   reset: '\x1b[0m',
@@ -18,6 +18,7 @@ export const ERRORS = {
 };
 
 export const HOME = homedir();
+export const PLATFORM = platform();
 
 /**
  * Regular expression to split the input into commands and arguments.

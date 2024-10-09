@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import { ERRORS, HOME } from '../constants.js';
+import { ERRORS, HOME, PLATFORM } from '../constants.js';
 import { showError } from '../utils.js';
 
 /**
@@ -26,11 +26,15 @@ export const cd = async (currentDir, options) => {
   }
   const [pathToDirectory] = options;
 
-  const cleanPath = path.isAbsolute(pathToDirectory)
-    ? pathToDirectory === '/'
-      ? pathToDirectory
-      : pathToDirectory.replace(/[\/\\]$/, '')
+  let cleanPath = path.isAbsolute(pathToDirectory)
+    ? pathToDirectory
     : path.resolve(currentDir, pathToDirectory);
+
+    cleanPath = path.normalize(cleanPath);
+
+    if (PLATFORM === 'win32' && (cleanPath === '/' || cleanPath === '\\')) {
+      cleanPath = path.parse(currentDir).root;
+    }
 
   try {
     const stats = await fs.stat(cleanPath);

@@ -17,7 +17,13 @@ const main = async () => {
     const args = [];
     let match;
     while ((match = COMMAND_ARGUMENTS_REGEX.exec(answer)) !== null) {
-      args.push(match[1] ? match[1] : match[0]);
+      if (match[1]) {
+        args.push(match[1]);
+      } else if (match[2]) {
+        args.push(match[2]);
+      } else {
+        args.push(match[0]);
+      }
     }
     const [command, ...rest] = args;
     currentDir = await operation(rl, currentDir, command, rest);

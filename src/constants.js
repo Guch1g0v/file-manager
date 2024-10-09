@@ -24,11 +24,13 @@ export const PLATFORM = platform();
  * Regular expression to split the input into commands and arguments.
  *
  * This regex matches either:
- * - A sequence of characters that are not spaces or quotation marks: `[^\s"]+`
- * - Text inside quotation marks (without including the quotes): `"([^"]*)"`
+ * - A sequence of characters that are not spaces, double, or single quotation marks: `[^\s"']+`
+ * - Text inside double quotation marks (without including the quotes): `"([^"]*)"`
+ * - Text inside single quotation marks (without including the quotes): `'([^']*)'`
  *
- * It is useful for parsing input commands where arguments may be quoted strings.
+ * It is useful for parsing input commands where arguments may be quoted strings using either single or double quotes.
  *
  * @type {RegExp}
  */
-export const COMMAND_ARGUMENTS_REGEX = /[^\s"]+|"([^"]*)"/g;
+export const COMMAND_ARGUMENTS_REGEX = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
+

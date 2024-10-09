@@ -30,11 +30,11 @@ export const cd = async (currentDir, options) => {
     ? pathToDirectory
     : path.resolve(currentDir, pathToDirectory);
 
-    cleanPath = path.normalize(cleanPath);
+  cleanPath = path.normalize(cleanPath);
 
-    if (PLATFORM === 'win32' && (cleanPath === '/' || cleanPath === '\\')) {
-      cleanPath = path.parse(currentDir).root;
-    }
+  if (PLATFORM === 'win32' && (cleanPath === '/' || cleanPath === '\\')) {
+    cleanPath = path.parse(currentDir).root;
+  }
 
   try {
     const stats = await fs.stat(cleanPath);

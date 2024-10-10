@@ -8,10 +8,7 @@ import { rn } from './rn.js';
 import { up } from './up.js';
 import { cp } from './cp.js';
 import { mv } from './mv.js';
-
-const clear = (currentDir) => {
-  return currentDir;
-};
+import { clear } from './clear.js';
 
 const os = (currentDir) => {
   return currentDir;

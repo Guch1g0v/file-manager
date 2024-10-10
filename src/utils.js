@@ -1,7 +1,8 @@
-import { EOL } from 'node:os';
-import { colors, DIR_TYPE, FILE_TYPE } from './constants.js';
+import { EOL, cpus as osCpus, userInfo } from 'node:os';
+import { colors, DIR_TYPE, FILE_TYPE, OS_OPTIONS } from './constants.js';
 import fs from 'fs/promises';
 import { readdir } from 'node:fs/promises';
+import { HOME } from './constants.js';
 
 /**
  * @return {String}
@@ -86,5 +87,48 @@ export const printFilesTable = async (dirPath) => {
   if (result.length !== 0) {
     console.table(result);
   }
-  process.stdout.write(EOL);
+};
+
+/**
+ * Prints various system information based on the provided options.
+ * Supported options:
+ * - '--EOL': Prints the end-of-line marker for the current OS.
+ * - '--homedir': Prints the home directory of the current user.
+ * - '--username': Prints the username of the current system user.
+ * - '--architecture': Prints the CPU architecture of the Node.js binary.
+ * - '--cpus': Prints detailed information about each CPU core, including the model and clock rate.
+ *
+ * @param {string[]} options - An array of options that determine what system information to print.
+ * Each option corresponds to a specific system property.
+ */
+export const printOsOptions = (options) => {
+  for (const option of options) {
+    if (option === OS_OPTIONS.eol) {
+      console.log(JSON.stringify(EOL));
+    }
+    if (option === OS_OPTIONS.homedir) {
+      console.log(HOME);
+    }
+    if (option === OS_OPTIONS.username) {
+      console.log(userInfo().username);
+    }
+
+    if (option === OS_OPTIONS.architecture) {
+      console.log(process.arch);
+    }
+
+    if (option === OS_OPTIONS.cpus) {
+      const cpus = osCpus();
+      const result = cpus.map((cpu) => {
+        return {
+          Model: cpu.model,
+          ClockRate: `${(cpu.speed / 1000).toFixed(2)} GHz`,
+        };
+      });
+      result.push({
+        Total: cpus.length,
+      });
+      console.table(result);
+    }
+  }
 };

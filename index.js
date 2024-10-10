@@ -4,6 +4,8 @@ import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import { operation } from './src/operation.js';
 import { COMMAND_ARGUMENTS_REGEX, DirState, HOME } from './src/constants.js';
+import { EOL } from 'node:os';
+
 const rl = readline.createInterface({ input, output });
 
 const main = async () => {
@@ -27,6 +29,7 @@ const main = async () => {
     }
     const [command, ...options] = args;
     currentDir = await operation(rl, currentDir, command, options);
+    process.stdout.write(EOL);
     setPrompt(rl, currentDir);
   });
 

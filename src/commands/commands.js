@@ -9,10 +9,9 @@ import { up } from './up.js';
 import { cp } from './cp.js';
 import { mv } from './mv.js';
 import { clear } from './clear.js';
+import { os } from './os.js';
+import { OS_OPTIONS } from '../constants.js';
 
-const os = (currentDir) => {
-  return currentDir;
-};
 const hash = (currentDir) => {
   return currentDir;
 };
@@ -48,7 +47,17 @@ export const COMMANDS = {
   cp: { cmd: 'cp', options: [], do: cp },
   mv: { cmd: 'mv', options: [], do: mv },
   rm: { cmd: 'rm', options: [], do: rm },
-  os: { cmd: 'os', options: ['EOL', 'cpus', 'homedir', 'username', 'architecture'], do: os },
+  os: {
+    cmd: 'os',
+    options: [
+      OS_OPTIONS.eol,
+      OS_OPTIONS.cpus,
+      OS_OPTIONS.homedir,
+      OS_OPTIONS.username,
+      OS_OPTIONS.architecture,
+    ],
+    do: os,
+  },
   hash: { cmd: 'hash', options: [], do: hash },
   compress: { cmd: 'compress', options: [], do: compress },
   decompress: { cmd: 'decompress', options: [], do: decompress },

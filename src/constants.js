@@ -20,6 +20,7 @@ export const ERRORS = {
   failed: 'Operation failed',
   notDirectory: 'Not a directory',
   invalidArgumentCount: 'Invalid number of arguments',
+  optionNotExists: 'Option does not exist',
 };
 
 export const HOME = homedir();
@@ -42,3 +43,11 @@ export const DirState = {
  * @type {RegExp}
  */
 export const COMMAND_ARGUMENTS_REGEX = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
+
+export const OS_OPTIONS = {
+  eol: '--EOL',
+  homedir: '--homedir',
+  username: '--username',
+  architecture: '--architecture',
+  cpus: '--cpus',
+};

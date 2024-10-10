@@ -1,7 +1,6 @@
 import path from 'node:path';
-import fs from 'node:fs/promises';
 import { ERRORS } from '../constants.js';
-import { showError } from '../utils.js';
+import { checkDirAccessible, showError } from '../utils.js';
 
 /**
  * Moves up one directory level from the current directory.
@@ -21,11 +20,8 @@ export const up = async (currentDir, options) => {
   }
   const dir = path.parse(currentDir).dir;
   try {
-    const stats = await fs.stat(dir);
-    if (stats.isDirectory()) {
-      return dir;
-    }
-    return currentDir;
+    await checkDirAccessible(dir);
+    return dir;
   } catch (error) {
     showError(ERRORS.failed);
     showError(`${error}`);

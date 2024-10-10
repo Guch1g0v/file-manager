@@ -25,7 +25,7 @@ export const ls = async (currentDir, options) => {
       dirPath = path.resolve(currentDir, option);
       const fileStats = await getStats(dirPath);
       if (!fileStats) {
-        throw new Error(`Unable to access file at: ${dirPath}`);
+        throw new Error(`${ERRORS.unablAccess} ${dirPath}`);
       }
       if (fileStats.isFile()) {
         const fileName = path.basename(dirPath);

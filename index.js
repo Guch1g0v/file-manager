@@ -6,9 +6,8 @@ import { operation } from './src/operation.js';
 import { COMMAND_ARGUMENTS_REGEX, DirState, HOME } from './src/constants.js';
 import { EOL } from 'node:os';
 
-const rl = readline.createInterface({ input, output });
-
 const main = async () => {
+  const rl = readline.createInterface({ input, output });
   let currentDir = HOME;
   DirState.PWD = HOME;
   const currentUser = getUsername();
@@ -28,7 +27,10 @@ const main = async () => {
       }
     }
     const [command, ...options] = args;
-    currentDir = await operation(rl, currentDir, command, options);
+    if (command === '.exit') {
+      rl.close();
+    }
+    currentDir = await operation(currentDir, command, options);
     process.stdout.write(EOL);
     setPrompt(rl, currentDir);
   });

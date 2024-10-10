@@ -11,10 +11,8 @@ import { mv } from './mv.js';
 import { clear } from './clear.js';
 import { os } from './os.js';
 import { OS_OPTIONS } from '../constants.js';
+import { hash } from './hash.js';
 
-const hash = (currentDir) => {
-  return currentDir;
-};
 const compress = (currentDir) => {
   return currentDir;
 };
@@ -40,7 +38,6 @@ export const COMMANDS = {
   cd: { cmd: 'cd', options: [], do: cd },
   ls: { cmd: 'ls', options: [], do: ls },
   up: { cmd: 'up', options: [], do: up },
-  exit: { cmd: '.exit', options: [] },
   cat: { cmd: 'cat', options: [], do: cat },
   add: { cmd: 'add', options: [], do: add },
   rn: { cmd: 'rn', options: [], do: rn },

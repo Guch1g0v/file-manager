@@ -1,5 +1,5 @@
 import { ERRORS } from '../constants.js';
-import { showError } from '../utils.js';
+import { checkFileAccessible, showError } from '../utils.js';
 import path from 'node:path';
 import { rm as fsRm } from 'fs/promises';
 
@@ -18,6 +18,7 @@ export const rm = async (currentDir, options) => {
   const [fileName] = options;
   try {
     const filePath = path.resolve(currentDir, fileName);
+    await checkFileAccessible(filePath);
     await fsRm(filePath);
   } catch (error) {
     showError(ERRORS.failed);

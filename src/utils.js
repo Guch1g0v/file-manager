@@ -1,5 +1,5 @@
 import { EOL, cpus as osCpus, userInfo } from 'node:os';
-import { colors, DIR_TYPE, FILE_TYPE, OS_OPTIONS } from './constants.js';
+import { colors, DIR_TYPE, ERRORS, FILE_TYPE, OS_OPTIONS } from './constants.js';
 import fs from 'fs/promises';
 import { readdir } from 'node:fs/promises';
 import { HOME } from './constants.js';
@@ -130,5 +130,42 @@ export const printOsOptions = (options) => {
       });
       console.table(result);
     }
+  }
+};
+
+/**
+ * Checks if a file at the specified file path is accessible and is a valid file.
+ * Throws an error if the file does not exist or is not a regular file.
+ *
+ * @param {string} filePath - The path of the file to check for accessibility.
+ * @returns {Promise<void>} Resolves if the file is accessible and is a valid file.
+ * @throws {Error} If the file is not accessible or if the path does not point to a regular file.
+ */
+export const checkFileAccessible = async (filePath) => {
+  const stats = await getStats(filePath);
+  if (!stats) {
+    throw new Error(`${ERRORS.unablAccess} [${filePath}]`);
+  }
+  if (!stats.isFile()) {
+    throw new Error(`${ERRORS.notFile} [${filePath}]`);
+  }
+};
+
+/**
+ * Checks if a directory at the specified path is accessible and is a valid directory.
+ * Throws an error if the directory does not exist or the path is not a directory.
+ *
+ * @param {string} dirPath - The path of the directory to check for accessibility.
+ * @returns {Promise<void>} Resolves if the directory is accessible and is a valid directory.
+ * @throws {Error} If the directory is not accessible or if the path does not point to a valid directory.
+ */
+
+export const checkDirAccessible = async (dirPath) => {
+  const stats = await getStats(dirPath);
+  if (!stats) {
+    throw new Error(`${ERRORS.unablAccess} [${dirPath}]`);
+  }
+  if (!stats.isDirectory()) {
+    throw new Error(`${ERRORS.notDirectory} [${dirPath}]`);
   }
 };

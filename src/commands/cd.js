@@ -1,8 +1,6 @@
 import path from 'node:path';
-import fs from 'node:fs/promises';
-
 import { DirState, ERRORS, HOME, PLATFORM } from '../constants.js';
-import { showError } from '../utils.js';
+import { checkDirAccessible, showError } from '../utils.js';
 
 /**
  * Changes the current working directory.
@@ -57,15 +55,10 @@ export const cd = async (currentDir, options) => {
   }
 
   try {
-    const stats = await fs.stat(cleanPath);
-    if (stats.isDirectory()) {
-      DirState.OLDPWD = DirState.PWD;
-      DirState.PWD = cleanPath;
-      return cleanPath;
-    }
-    showError(ERRORS.failed);
-    showError(ERRORS.notDirectory);
-    return currentDir;
+    await checkDirAccessible(cleanPath);
+    DirState.OLDPWD = DirState.PWD;
+    DirState.PWD = cleanPath;
+    return cleanPath;
   } catch (error) {
     showError(ERRORS.failed);
     showError(`${error}`);

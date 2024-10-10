@@ -19,9 +19,11 @@ export const ERRORS = {
   invalidInput: 'Invalid input',
   failed: 'Operation failed',
   notDirectory: 'Not a directory',
+  notFile: 'Not a file',
   invalidArgumentCount: 'Invalid number of arguments',
   optionNotExists: 'Option does not exist',
   commandNotFound: 'Command not found',
+  unablAccess: 'Unable to access',
 };
 
 export const HOME = homedir();

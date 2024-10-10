@@ -1,5 +1,5 @@
 import { rename as fsRename } from 'fs/promises';
-import { showError } from '../utils.js';
+import { checkFileAccessible, showError } from '../utils.js';
 import { ERRORS } from '../constants.js';
 import path from 'path';
 /**
@@ -18,6 +18,7 @@ export const rn = async (currentDir, options) => {
   const [oldFileName, newFileName] = options;
   try {
     const oldPath = path.resolve(currentDir, oldFileName);
+    await checkFileAccessible(oldPath);
     const newPath = path.resolve(currentDir, newFileName);
     await fsRename(oldPath, newPath);
   } catch (error) {

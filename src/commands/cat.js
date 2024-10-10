@@ -1,6 +1,6 @@
 import { createReadStream } from 'node:fs';
 import { ERRORS } from '../constants.js';
-import { showError } from '../utils.js';
+import { checkFileAccessible, showError } from '../utils.js';
 import path from 'node:path';
 import { EOL } from 'node:os';
 
@@ -10,14 +10,15 @@ import { EOL } from 'node:os';
  * @returns {string}
  */
 export const cat = async (currentDir, options) => {
-  if (options.length > 1) {
+  if (options.length !== 1) {
     showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   const [pathToFile] = options;
-  const file = path.resolve(currentDir, pathToFile);
-  const readableStream = createReadStream(file);
+  const filePath = path.resolve(currentDir, pathToFile);
   try {
+    await checkFileAccessible(filePath);
+    const readableStream = createReadStream(filePath);
     return new Promise((resolve) => {
       readableStream.on('data', (data) => {
         process.stdout.write(`${data}${EOL}`, 'utf8');

@@ -7,7 +7,7 @@ export const FILE_TYPES = {
   block: 'block device',
   character: 'character device',
   fifo: 'FIFO',
-  scoket: 'socket',
+  socket: 'socket',
   unknown: 'unknown',
 };
 
@@ -18,7 +18,7 @@ export const FILE_PRIORITY = {
   [FILE_TYPES.block]: 4,
   [FILE_TYPES.character]: 5,
   [FILE_TYPES.fifo]: 6,
-  [FILE_TYPES.scoket]: 7,
+  [FILE_TYPES.socket]: 7,
   [FILE_TYPES.unknown]: 8,
 };
 

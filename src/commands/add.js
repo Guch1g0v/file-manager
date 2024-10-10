@@ -19,7 +19,9 @@ export const add = async (currentDir, options) => {
   const [fileName] = options;
   try {
     const filePath = path.resolve(currentDir, fileName);
-    await fs.writeFile(filePath, '', 'utf8');
+    const fileHandle = await fs.open(filePath, 'wx');
+    await fileHandle.writeFile('');
+    await fileHandle.close();
   } catch {
     showError(ERRORS.failed);
   }

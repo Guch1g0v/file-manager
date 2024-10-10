@@ -1,6 +1,6 @@
 import { ERRORS } from '../constants.js';
 import { showError } from '../utils.js';
-import { innerCp } from './cp.js';
+import { innerCp } from './helpers/innerCp.js';
 import { rm } from './rm.js';
 
 /**

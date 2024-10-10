@@ -5,11 +5,15 @@ import path from 'node:path';
 import { ERRORS } from '../../constants.js';
 import { checkDirAccessible, checkFileAccessible, showError } from '../../utils.js';
 /**
+ * Handles file compression or decompression based on the provided flag.
  *
- * @param {string} currentDir
- * @param {string[]} options
- * @param {boolean} isCompress
- * @returns {string}
+ * @async
+ * @function
+ * @param {string} currentDir - The current working directory from which the paths are resolved.
+ * @param {string[]} options - Array of two strings: source file path and destination file path.
+ * @param {boolean} isCompress - A flag indicating whether to compress (`true`) or decompress (`false`) the file.
+ * @returns {Promise<string>} - Returns the current directory after the operation is completed.
+ * @throws {Error} - Throws an error if file accessibility checks fail or if there is an issue during compression/decompression.
  */
 
 export const handleCompression = async (currentDir, options, isCompress) => {

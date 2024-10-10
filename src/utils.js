@@ -72,7 +72,9 @@ export const getFileType = (file) => {
   return FILE_TYPES.unknown;
 };
 
-const truncateText = (text, maxLength) => {
+const truncateText = (text) => {
+  const terminalWidth = process.stdout.columns || 80;
+  const maxLength = Math.min(terminalWidth - 40, 200);
   if (text.length <= maxLength) {
     return text;
   }
@@ -86,12 +88,10 @@ const truncateText = (text, maxLength) => {
  */
 export const printFilesTable = async (dirPath) => {
   console.log(dirPath);
-  const terminalWidth = process.stdout.columns || 80;
-  const maxFileNameLength = Math.min(terminalWidth - 40, 200);
   const result = [];
   const files = await readdir(dirPath, { withFileTypes: true });
   for (const file of files) {
-    const fileName = truncateText(file.name, maxFileNameLength);
+    const fileName = truncateText(file.name);
     const type = getFileType(file);
     result.push({ Name: fileName, Type: type });
   }
@@ -138,7 +138,7 @@ export const printOsOptions = (options) => {
       const cpus = osCpus();
       const result = cpus.map((cpu) => {
         return {
-          Model: cpu.model,
+          Model: truncateText(cpu.model),
           ClockRate: `${(cpu.speed / 1000).toFixed(2)} GHz`,
         };
       });

@@ -25,8 +25,8 @@ const main = async () => {
         args.push(match[0]);
       }
     }
-    const [command, ...rest] = args;
-    currentDir = await operation(rl, currentDir, command, rest);
+    const [command, ...options] = args;
+    currentDir = await operation(rl, currentDir, command, options);
     setPrompt(rl, currentDir);
   });
 

@@ -17,6 +17,9 @@ import { showError } from './utils.js';
  * @returns {String}
  */
 export const operation = async (rl, currentDir, command, options) => {
+  if (!command) {
+    return currentDir;
+  }
   const isCommandExists = command in COMMANDS || command === COMMANDS.exit.cmd;
   if (!isCommandExists) {
     showError(ERRORS.invalidInput);

@@ -17,6 +17,7 @@ import { showError } from '../utils.js';
 export const up = async (currentDir, options) => {
   if (options.length > 0) {
     showError(ERRORS.invalidInput);
+    showError(ERRORS.invalidArgumentCount);
     return currentDir;
   }
   const dir = path.parse(currentDir).dir;
@@ -24,11 +25,11 @@ export const up = async (currentDir, options) => {
     const stats = await fs.stat(dir);
     if (stats.isDirectory()) {
       return dir;
-    } else {
-      return currentDir;
     }
+    return currentDir;
   } catch (error) {
     showError(ERRORS.failed);
+    showError(`${error}`);
     return currentDir;
   }
 };

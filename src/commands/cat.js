@@ -12,6 +12,7 @@ import { EOL } from 'node:os';
 export const cat = async (currentDir, options) => {
   if (options.length > 1) {
     showError(ERRORS.invalidInput);
+    showError(ERRORS.invalidArgumentCount);
     return currentDir;
   }
   const [pathToFile] = options;
@@ -22,16 +23,18 @@ export const cat = async (currentDir, options) => {
       readableStream.on('data', (data) => {
         process.stdout.write(`${data}${EOL}`, 'utf8');
       });
-      readableStream.on('error', () => {
+      readableStream.on('error', (err) => {
         showError(ERRORS.failed);
+        showError(`${err}`);
         resolve(currentDir);
       });
       readableStream.on('end', () => {
         resolve(currentDir);
       });
     });
-  } catch {
+  } catch (err) {
     showError(ERRORS.failed);
+    showError(`${err}`);
     return currentDir;
   }
 };

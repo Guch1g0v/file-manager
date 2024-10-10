@@ -19,6 +19,7 @@ import { showError } from '../utils.js';
 export const cd = async (currentDir, options) => {
   if (options.length > 1) {
     showError(ERRORS.invalidInput);
+    showError(ERRORS.invalidArgumentCount);
     return currentDir;
   }
   if (options.length === 0) {
@@ -64,9 +65,11 @@ export const cd = async (currentDir, options) => {
       return cleanPath;
     }
     showError(ERRORS.failed);
+    showError(ERRORS.notDirectory);
     return currentDir;
   } catch (error) {
     showError(ERRORS.failed);
+    showError(`${error}`);
     return currentDir;
   }
 };

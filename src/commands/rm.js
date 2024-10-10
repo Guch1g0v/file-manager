@@ -13,14 +13,16 @@ import { rm as fsRm } from 'fs/promises';
 export const rm = async (currentDir, options) => {
   if (options.length !== 1) {
     showError(ERRORS.invalidInput);
+    showError(ERRORS.invalidArgumentCount);
     return currentDir;
   }
   const [fileName] = options;
   try {
     const filePath = path.resolve(currentDir, fileName);
     await fsRm(filePath);
-  } catch {
+  } catch (error) {
     showError(ERRORS.failed);
+    showError(`${error}`);
   }
   return currentDir;
 };

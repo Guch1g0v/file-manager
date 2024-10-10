@@ -13,6 +13,7 @@ import path from 'path';
 export const rn = async (currentDir, options) => {
   if (options.length !== 2) {
     showError(ERRORS.invalidInput);
+    showError(ERRORS.invalidArgumentCount);
     return currentDir;
   }
   const [oldFileName, newFileName] = options;
@@ -20,8 +21,9 @@ export const rn = async (currentDir, options) => {
     const oldPath = path.resolve(currentDir, oldFileName);
     const newPath = path.resolve(currentDir, newFileName);
     await fsRename(oldPath, newPath);
-  } catch {
+  } catch (error) {
     showError(ERRORS.failed);
+    showError(`${error}`);
   }
   return currentDir;
 };

@@ -18,6 +18,8 @@ export const colors = {
 export const ERRORS = {
   invalidInput: 'Invalid input',
   failed: 'Operation failed',
+  notDirectory: 'Not a directory',
+  invalidArgumentCount: 'Invalid number of arguments',
 };
 
 export const HOME = homedir();

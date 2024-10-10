@@ -12,13 +12,8 @@ import { clear } from './clear.js';
 import { os } from './os.js';
 import { OS_OPTIONS } from '../constants.js';
 import { hash } from './hash.js';
-
-const compress = (currentDir) => {
-  return currentDir;
-};
-const decompress = (currentDir) => {
-  return currentDir;
-};
+import { compress } from './compress.js';
+import { decompress } from './decompress.js';
 
 /**
  * @typedef {Object} Command

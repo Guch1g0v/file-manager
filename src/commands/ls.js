@@ -1,5 +1,5 @@
-import { ERRORS, FILE_TYPE } from '../constants.js';
-import { getStats, printFilesTable, showError } from '../utils.js';
+import { ERRORS } from '../constants.js';
+import { getFileType, getStats, printFilesTable, showError } from '../utils.js';
 import path from 'node:path';
 
 /**
@@ -27,9 +27,10 @@ export const ls = async (currentDir, options) => {
       if (!fileStats) {
         throw new Error(`${ERRORS.unablAccess} ${dirPath}`);
       }
-      if (fileStats.isFile()) {
+      if (!fileStats.isDirectory()) {
         const fileName = path.basename(dirPath);
-        console.table([{ Name: fileName, Type: FILE_TYPE }]);
+        const type = getFileType(fileStats);
+        console.table([{ Name: fileName, Type: type }]);
         continue;
       }
       await printFilesTable(dirPath);

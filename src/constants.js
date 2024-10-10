@@ -1,7 +1,26 @@
 import { homedir, platform } from 'node:os';
 
-export const FILE_TYPE = 'file';
-export const DIR_TYPE = 'directory';
+export const FILE_TYPES = {
+  file: 'file',
+  dir: 'directory',
+  sym: 'symbolic link',
+  block: 'block device',
+  character: 'character device',
+  fifo: 'FIFO',
+  scoket: 'socket',
+  unknown: 'unknown',
+};
+
+export const FILE_PRIORITY = {
+  [FILE_TYPES.dir]: 1,
+  [FILE_TYPES.file]: 2,
+  [FILE_TYPES.sym]: 3,
+  [FILE_TYPES.block]: 4,
+  [FILE_TYPES.character]: 5,
+  [FILE_TYPES.fifo]: 6,
+  [FILE_TYPES.scoket]: 7,
+  [FILE_TYPES.unknown]: 8,
+};
 
 export const colors = {
   reset: '\x1b[0m',

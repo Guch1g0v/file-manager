@@ -1,5 +1,5 @@
 import { EOL, cpus as osCpus, userInfo } from 'node:os';
-import { colors, DIR_TYPE, ERRORS, FILE_TYPE, OS_OPTIONS } from './constants.js';
+import { colors, ERRORS, FILE_PRIORITY, FILE_TYPES, OS_OPTIONS } from './constants.js';
 import fs from 'fs/promises';
 import { readdir } from 'node:fs/promises';
 import { HOME } from './constants.js';
@@ -55,6 +55,23 @@ export const getStats = async (dirPath) => {
   } catch {}
 };
 
+/**
+ * Determines the type of a file.
+ *
+ * @param {fs.Dirent} file - The file or directory entry.
+ * @returns {string} - The type of the file (directory, file, symbolic link, etc.).
+ */
+export const getFileType = (file) => {
+  if (file.isDirectory()) return FILE_TYPES.dir;
+  if (file.isFile()) return FILE_TYPES.file;
+  if (file.isSymbolicLink()) return FILE_TYPES.sym;
+  if (file.isBlockDevice()) return FILE_TYPES.block;
+  if (file.isCharacterDevice()) return FILE_TYPES.character;
+  if (file.isFIFO()) return FILE_TYPES.fifo;
+  if (file.isSocket()) return FILE_TYPES.scoket;
+  return FILE_TYPES.unknown;
+};
+
 const truncateText = (text, maxLength) => {
   if (text.length <= maxLength) {
     return text;
@@ -75,15 +92,15 @@ export const printFilesTable = async (dirPath) => {
   const files = await readdir(dirPath, { withFileTypes: true });
   for (const file of files) {
     const fileName = truncateText(file.name, maxFileNameLength);
-    const type = file.isDirectory() ? DIR_TYPE : FILE_TYPE;
+    const type = getFileType(file);
     result.push({ Name: fileName, Type: type });
   }
   result.sort((a, b) => {
-    if (a.Type === DIR_TYPE && b.Type !== DIR_TYPE) {
-      return -1;
-    }
-    return 1;
+    const priorityA = FILE_PRIORITY[a.Type] || FILE_PRIORITY[FILE_TYPES.unknown];
+    const priorityB = FILE_PRIORITY[b.Type] || FILE_PRIORITY[FILE_TYPES.unknown];
+    return priorityA - priorityB;
   });
+
   if (result.length !== 0) {
     console.table(result);
   }

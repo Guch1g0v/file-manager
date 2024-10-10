@@ -22,7 +22,7 @@ export const operation = async (rl, currentDir, command, options) => {
   }
   const isCommandExists = command in COMMANDS || command === COMMANDS.exit.cmd;
   if (!isCommandExists) {
-    showError(ERRORS.invalidInput);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.commandNotFound} [${command}]`);
     return currentDir;
   }
   if (command === COMMANDS.exit.cmd) {

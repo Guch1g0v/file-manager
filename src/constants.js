@@ -21,6 +21,7 @@ export const ERRORS = {
   notDirectory: 'Not a directory',
   invalidArgumentCount: 'Invalid number of arguments',
   optionNotExists: 'Option does not exist',
+  commandNotFound: 'Command not found',
 };
 
 export const HOME = homedir();

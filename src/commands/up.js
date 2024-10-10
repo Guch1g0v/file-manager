@@ -16,8 +16,7 @@ import { showError } from '../utils.js';
  */
 export const up = async (currentDir, options) => {
   if (options.length > 0) {
-    showError(ERRORS.invalidInput);
-    showError(ERRORS.invalidArgumentCount);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   const dir = path.parse(currentDir).dir;

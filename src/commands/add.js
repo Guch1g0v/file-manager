@@ -15,8 +15,7 @@ import { ERRORS } from '../constants.js';
  */
 export const add = async (currentDir, options) => {
   if (options.length !== 1) {
-    showError(ERRORS.invalidInput);
-    showError(ERRORS.invalidArgumentCount);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   const [fileName] = options;

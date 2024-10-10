@@ -18,8 +18,7 @@ import { showError } from '../utils.js';
  */
 export const cd = async (currentDir, options) => {
   if (options.length > 1) {
-    showError(ERRORS.invalidInput);
-    showError(ERRORS.invalidArgumentCount);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   if (options.length === 0) {

@@ -12,8 +12,7 @@ import path from 'path';
 
 export const rn = async (currentDir, options) => {
   if (options.length !== 2) {
-    showError(ERRORS.invalidInput);
-    showError(ERRORS.invalidArgumentCount);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   const [oldFileName, newFileName] = options;

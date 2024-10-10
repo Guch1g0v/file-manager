@@ -11,8 +11,7 @@ import { EOL } from 'node:os';
  */
 export const cat = async (currentDir, options) => {
   if (options.length > 1) {
-    showError(ERRORS.invalidInput);
-    showError(ERRORS.invalidArgumentCount);
+    showError(`${ERRORS.invalidInput}: ${ERRORS.invalidArgumentCount}`);
     return currentDir;
   }
   const [pathToFile] = options;

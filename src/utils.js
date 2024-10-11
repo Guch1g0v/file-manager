@@ -68,7 +68,7 @@ export const getFileType = (file) => {
   if (file.isBlockDevice()) return FILE_TYPES.block;
   if (file.isCharacterDevice()) return FILE_TYPES.character;
   if (file.isFIFO()) return FILE_TYPES.fifo;
-  if (file.isSocket()) return FILE_TYPES.scoket;
+  if (file.isSocket()) return FILE_TYPES.socket;
   return FILE_TYPES.unknown;
 };
 

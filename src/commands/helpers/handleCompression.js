@@ -1,5 +1,5 @@
 import { createReadStream, createWriteStream } from 'node:fs';
-import { createGzip, createGunzip } from 'node:zlib';
+import { createBrotliCompress, createBrotliDecompress } from 'node:zlib';
 import { pipeline } from 'node:stream/promises';
 import path from 'node:path';
 import { ERRORS } from '../../constants.js';
@@ -32,7 +32,7 @@ export const handleCompression = async (currentDir, options, isCompress) => {
 
     const srcStream = createReadStream(fileSrc);
     const destStream = createWriteStream(fileDest);
-    const zipStream = isCompress ? createGzip() : createGunzip();
+    const zipStream = isCompress ? createBrotliCompress() : createBrotliDecompress();
 
     await pipeline(srcStream, zipStream, destStream);
   } catch (error) {

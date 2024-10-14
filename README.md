@@ -67,10 +67,7 @@ Changes the current working directory.
 
 ```bash
 cd /path/to/directory
-cd ~
-cd -
 cd "/path/to/directory with spaces"
-cd '/path/to/directory with spaces'
 ```
 
 ### 4. `clear`
